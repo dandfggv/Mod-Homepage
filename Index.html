@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>KullTools V2</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+/* ===================== RESET ===================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ===================== ROOT ===================== */
+:root {
+    --cyan: #00f2ff;
+    --bg: #050505;
+    --panel: rgba(0,0,0,0.6);
+}
+
+/* ===================== BODY ===================== */
+body {
+    background: #050505;
+    color: #eaeaea;
+    font-family: monospace;
+    overflow-x: hidden;
+}
+
+/* ===================== PARTICLES ===================== */
+#particles {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+}
+
+/* ===================== PARALLAX LAYERS ===================== */
+.parallax {
+    position: fixed;
+    inset: 0;
+    background:
+        repeating-linear-gradient(
+            45deg,
+            #0a0a0a 0px,
+            #0a0a0a 10px,
+            #0f0f0f 10px,
+            #0f0f0f 20px
+        );
+    z-index: -3;
+    transform: translateZ(0);
+}
+
+/* ===================== MOTD ===================== */
+.motd {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(90deg, #0b1b1f, #041013);
+    border-bottom: 2px solid var(--cyan);
+    text-align: center;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+}
+
+/* ===================== HEADER ===================== */
+header {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.hero {
+    background: var(--panel);
+    padding: 40px;
+    border: 2px solid #1a1a1a;
+    box-shadow: 0 0 30px rgba(0,242,255,0.15);
+}
+
+.hero h1 {
+    font-size: 3rem;
+    color: var(--cyan);
+    text-shadow: 0 0 12px rgba(0,242,255,0.6);
+}
+
+.hero p {
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: #ccc;
+}
+
+/* ===================== SECTIONS ===================== */
+section {
+    padding: 90px 10%;
+    position: relative;
+}
+
+.section-title {
+    color: var(--cyan);
+    margin-bottom: 20px;
+    font-size: 1.4rem;
+}
+
+.section-desc {
+    max-width: 800px;
+    font-size: 0.8rem;
+    color: #b0b0b0;
+}
+
+/* ===================== BLOCK TEXTURE ===================== */
+.block {
+    background:
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 16px 16px;
+    border: 2px solid #1f1f1f;
+    padding: 25px;
+    margin-top: 30px;
+}
+
+/* ===================== BADGES ===================== */
+.badges {
+    display: flex;
+    gap: 20px;
+    margin-top: 25px;
+}
+
+.badge {
+    padding: 12px 18px;
+    border: 2px solid var(--cyan);
+    color: var(--cyan);
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+    background: rgba(0,242,255,0.1);
+}
+
+/* ===================== CHANGELOG ===================== */
+.changelog {
+    border-left: 4px solid var(--cyan);
+    padding-left: 25px;
+}
+
+.changelog li {
+    font-size: 0.75rem;
+    margin-bottom: 8px;
+    color: #d0d0d0;
+}
+
+/* ===================== SOUND TOGGLE ===================== */
+.sound-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--panel);
+    border: 2px solid var(--cyan);
+    color: var(--cyan);
+    padding: 10px 14px;
+    cursor: pointer;
+    font-size: 0.7rem;
+}
+
+/* ===================== FOOTER ===================== */
+footer {
+    text-align: center;
+    padding: 30px;
+    border-top: 2px solid #1a1a1a;
+    font-size: 0.7rem;
+    color: #888;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="particles"></canvas>
+<div class="parallax"></div>
+
+<div class="motd">
+    §aKullTools V2 §7• §bMinecraft 1.21.8 §7• §eUtility Redefined
+</div>
+
+<header>
+    <div class="hero">
+        <h1>KullTools V2</h1>
+        <p>
+            Advanced tools • Vanilla balance • Performance focused<br>
+            Built for Minecraft 1.21.8
+        </p>
+    </div>
+</header>
+
+<section>
+    <h2 class="section-title">About</h2>
+    <div class="block">
+        <p class="section-desc">
+            KullTools V2 introduces intelligent utility tools while preserving
+            the core Minecraft experience. Lightweight, expandable, and future-ready.
+        </p>
+
+        <div class="badges">
+            <div class="badge">FABRIC</div>
+            <div class="badge">NEOFORGE</div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h2 class="section-title">Version & Changelog</h2>
+    <div class="block changelog">
+        <ul>
+            <li>V2.0.0 – Complete core rewrite</li>
+            <li>Smart tool behavior system</li>
+            <li>Optimized performance pipeline</li>
+            <li>Balanced survival progression</li>
+            <li>Target: Minecraft 1.21.8</li>
+        </ul>
+    </div>
+</section>
+
+<footer>
+    © 2026 KullTools V2 • Single-file Minecraft Mod Homepage
+</footer>
+
+<div class="sound-toggle" id="soundBtn">SOUND: OFF</div>
+
+<script>
+/* ===================== PARTICLES ===================== */
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+let w, h, particles = [];
+
+function resize() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+}
+window.addEventListener("resize", resize);
+resize();
+
+for (let i = 0; i < 120; i++) {
+    particles.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        s: Math.random() * 1.5 + 0.5,
+        v: Math.random() * 0.3 + 0.1
+    });
+}
+
+function draw() {
+    ctx.clearRect(0,0,w,h);
+    ctx.fillStyle = "#00f2ff";
+    particles.forEach(p => {
+        ctx.globalAlpha = 0.6;
+        ctx.fillRect(p.x, p.y, p.s, p.s);
+        p.y -= p.v;
+        if (p.y < 0) p.y = h;
+    });
+    requestAnimationFrame(draw);
+}
+draw();
+
+/* ===================== PARALLAX ===================== */
+window.addEventListener("scroll", () => {
+    document.querySelector(".parallax").style.transform =
+        `translateY(${window.scrollY * 0.3}px)`;
+});
+
+/* ===================== SOUND ===================== */
+let audioCtx, soundOn = false;
+const btn = document.getElementById("soundBtn");
+
+function clickSound() {
+    if (!soundOn) return;
+    const o = audioCtx.createOscillator();
+    const g = audioCtx.createGain();
+    o.frequency.value = 880;
+    o.type = "square";
+    g.gain.value = 0.05;
+    o.connect(g).connect(audioCtx.destination);
+    o.start();
+    o.stop(audioCtx.currentTime + 0.05);
+}
+
+btn.onclick = () => {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    soundOn = !soundOn;
+    btn.textContent = soundOn ? "SOUND: ON" : "SOUND: OFF";
+    clickSound();
+};
+
+document.addEventListener("click", clickSound);
+</script>
+
+</body>
+</html>
